@@ -2,20 +2,67 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>BCS duyệt ảnh</title>
+<title>Admin</title>
 </head>
 
 <body>
 
-<h1>Ảnh chờ duyệt</h1>
+<h2>Chấm điểm sinh viên</h2>
 
-<div id="pending"></div>
+<input id="mssv" placeholder="MSSV">
 
-<script src="script.js"></script>
-<h1>Quản lý sinh viên</h1>
+<br><br>
 
-<div id="adminList"></div>
+Điểm BCS
+<input type="number" id="diem_bcs">
 
-<script src="admin.js"></script>
+<br><br>
+
+Số ngày vắng
+<input type="number" id="ngay_vang">
+
+<br><br>
+
+<button onclick="saveAdmin()">
+Lưu
+</button>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const supabaseUrl = "https://utmyuuswzmpxrsxqucgd.supabase.co"
+const supabaseKey = "sb_publishable_EwO7S36ORnu8Hetge69-XQ_UzoSGBJN"
+
+const supabase = window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+)
+
+
+
+async function saveAdmin(){
+
+let mssv = document.getElementById("mssv").value
+
+let diem = document.getElementById("diem_bcs").value
+
+let vang = document.getElementById("ngay_vang").value
+
+await supabase
+.from("students")
+.update({
+diem_bcs:diem,
+ngay_vang:vang
+})
+.eq("mssv",mssv)
+
+alert("Đã lưu")
+
+}
+
+</script>
+
 </body>
 </html>

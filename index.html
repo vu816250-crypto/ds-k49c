@@ -1,59 +1,38 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
-<title>K49C Truyền Thông Số</title>
+<title>K49C Truyền thông số</title>
 
 <style>
 
 body{
-font-family: Arial;
-background: linear-gradient(135deg,#4facfe,#00f2fe);
-margin:0;
-padding:0;
-display:flex;
-justify-content:center;
-}
-
-.container{
-width:700px;
-background:white;
-margin-top:40px;
-padding:20px;
-border-radius:10px;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
+font-family:Arial;
+background:#f5f5f5;
+text-align:center;
 }
 
 h1{
-text-align:center;
 color:#333;
-margin-bottom:20px;
 }
 
 .student{
+background:white;
+width:400px;
+margin:10px auto;
+padding:10px;
+border-radius:10px;
 display:flex;
 justify-content:space-between;
-align-items:center;
-padding:10px;
-border-bottom:1px solid #eee;
-}
-
-.student span{
-font-size:15px;
 }
 
 button{
-background:#4facfe;
-border:none;
+background:#4CAF50;
 color:white;
-padding:6px 15px;
-border-radius:6px;
+border:none;
+padding:5px 10px;
+border-radius:5px;
 cursor:pointer;
-}
-
-button:hover{
-background:#2f80ed;
 }
 
 </style>
@@ -62,14 +41,11 @@ background:#2f80ed;
 
 <body>
 
-<div class="container">
-
-<h1>Danh Sách Sinh Viên<br>K49C Truyền Thông Số</h1>
+<h1>Danh sách sinh viên K49C</h1>
 
 <div id="studentList"></div>
 
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script src="script.js"></script>
 
 </body>

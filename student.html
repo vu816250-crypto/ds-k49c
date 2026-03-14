@@ -3,35 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <title>Trang sinh viên</title>
-<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1 id="name"></h1>
+<h2>Upload minh chứng</h2>
 
-<p>Số ngày vắng: <span id="absent"></span></p>
+<input type="file" id="file">
+<button onclick="uploadFile()">Upload</button>
 
-<h3>Điểm rèn luyện</h3>
+<h3>Điểm tự chấm</h3>
 
-Tự chấm:
-<input id="selfScore">
+<input type="number" id="diem_tu_cham">
 
 <br><br>
 
-BCS chấm:
-<span id="bcsScore"></span>
+<button onclick="saveStudentScore()">
+Lưu điểm
+</button>
 
-<h3>Upload minh chứng</h3>
+<h3>Điểm BCS chấm</h3>
+<p id="diem_bcs"></p>
 
-<input type="file" id="file">
-<button onclick="upload()">Upload</button>
+<h3>Số ngày vắng</h3>
+<p id="ngay_vang"></p>
 
-<h3>Ảnh hoạt động</h3>
+<h3>Ảnh minh chứng</h3>
+<div id="minhchung"></div>
 
-<div id="gallery"></div>
 
-<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const supabaseUrl = "https://utmyuuswzmpxrsxqucgd.supabase.co";
+const supabaseKey = "sb_publishable_EwO7S36ORnu8Hetge69-XQ_UzoSGBJN";
+
+const supabase = window.supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+
+async function loadStudent(){
+
+let mssv = localStorage.getItem("mssv");
+
+const { data } = await supabase
+.from("students")
+.select("*")
+.eq("mssv", mssv)
+.single();
+
+if(data){
+
+document.getElementById("diem_tu_cham").value = data.diem_tu_cham || ""
+
+document.getElementById("diem_bcs").innerText = data.diem_bcs || 0
+
+document.getElementById("ngay_vang").innerText = data.ngay_vang || 0
+
+}
+
+loadImages()
+
+}
+
+
+
+async function saveStudentScore(){
+
+let mssv = localStorage.getItem("mssv")
+
+let diem = document.getElementById("diem_tu_cham").value
+
+await supabase
+.from("students")
+.update({diem_tu_cham:diem})
+.eq("mssv",mssv)
+
+alert("Đã lưu điểm")
+
+}
+
+
+
+async function uploadFile(){
+
+let file = document.getElementById("file").files[0]
+
+let mssv = localStorage.getItem("mssv")
+
+let filename = mssv + "_" + Date.now()
+
+await supabase.storage
+.from("minhchung")
+.upload(filename,file)
+
+loadImages()
+
+}
+
+
+
+async function loadImages(){
+
+let { data } = await supabase.storage
+.from("minhchung")
+.list()
+
+let div = document.getElementById("minhchung")
+
+div.innerHTML = ""
+
+data.forEach(file=>{
+
+let url = supabaseUrl + "/storage/v1/object/public/minhchung/" + file.name
+
+div.innerHTML += `<img src="${url}" width="120">`
+
+})
+
+}
+
+loadStudent()
+
+</script>
 
 </body>
 </html>

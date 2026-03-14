@@ -58,13 +58,13 @@ const students = [
 {stt:56, id:"25T6110321", name:"Hồ Thị Như Ý"}
 
 ];
-const list = document.getElementById("studentList")
+const list = document.getElementById("studentList");
 
 students.forEach(s => {
 
-let div = document.createElement("div")
+let div = document.createElement("div");
 
-div.className = "student"
+div.className = "student";
 
 div.innerHTML = `
 <span>${s.stt} - ${s.id} - ${s.name}</span>
@@ -72,14 +72,18 @@ div.innerHTML = `
 <button onclick="openStudent('${s.id}')">
 Vào
 </button>
-`
+`;
 
-list.appendChild(div)
+list.appendChild(div);
 
-})
+});
 
 function openStudent(id){
 
-window.location.href = "student.html?id=" + id
+// lưu MSSV
+localStorage.setItem("mssv", id);
+
+// chuyển trang
+window.location.href = "student.html";
 
 }
