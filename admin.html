@@ -3,66 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<h2>Chấm điểm sinh viên</h2>
+<h2>Quản lý sinh viên</h2>
 
-<input id="mssv" placeholder="MSSV">
+<div id="studentList"></div>
 
-<br><br>
+<br>
 
-Điểm BCS
-<input type="number" id="diem_bcs">
+<h3>Sinh viên đang chọn</h3>
 
-<br><br>
+<p id="sv"></p>
 
-Số ngày vắng
-<input type="number" id="ngay_vang">
+<input type="number" id="diem_bcs" placeholder="Điểm BCS">
 
 <br><br>
 
-<button onclick="saveAdmin()">
-Lưu
-</button>
+<input type="number" id="ngay_vang" placeholder="Số ngày vắng">
+
+<br><br>
+
+<button onclick="saveAdmin()">Lưu</button>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<script>
-
-const supabaseUrl = "https://utmyuuswzmpxrsxqucgd.supabase.co"
-const supabaseKey = "sb_publishable_EwO7S36ORnu8Hetge69-XQ_UzoSGBJN"
-
-const supabase = window.supabase.createClient(
-supabaseUrl,
-supabaseKey
-)
-
-
-
-async function saveAdmin(){
-
-let mssv = document.getElementById("mssv").value
-
-let diem = document.getElementById("diem_bcs").value
-
-let vang = document.getElementById("ngay_vang").value
-
-await supabase
-.from("students")
-.update({
-diem_bcs:diem,
-ngay_vang:vang
-})
-.eq("mssv",mssv)
-
-alert("Đã lưu")
-
-}
-
-</script>
+<script src="admin.js"></script>
 
 </body>
 </html>
